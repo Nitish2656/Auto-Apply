@@ -27,9 +27,16 @@ export interface ApplicationDraft {
   email: string;
   subject: string;
   status: string;
+  location: string;
+  description: string;
+  url: string;
+  source: string;
+  posted_at: string;
 }
 
 export function getStats() {
+// ... omitting stats for brevity, will just replace the query
+
   try {
     const db = getDb();
     const jobsScanned = db.prepare('SELECT COUNT(*) as count FROM jobs').get() as { count: number };
@@ -67,7 +74,12 @@ export function getPendingDrafts(): ApplicationDraft[] {
         ct.email, 
         j.company, 
         j.title,
-        j.score 
+        j.score,
+        j.location,
+        j.description,
+        j.url,
+        j.source,
+        j.posted_at
       FROM applications a
       JOIN contacts ct ON ct.id = a.contact_id
       JOIN jobs j ON j.id = a.job_id

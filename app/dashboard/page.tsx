@@ -117,21 +117,40 @@ export default async function DashboardPage() {
                 <div key={draft.id} className="p-5 hover:bg-neutral-50 transition-colors">
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center flex-wrap gap-2 mb-2">
                         <span className="bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Draft</span>
-                        <span className="text-xs text-neutral-400 font-bold">Match Score: {draft.score}</span>
+                        <span className="text-xs text-neutral-500 font-bold bg-neutral-100 px-2 py-0.5 rounded-sm">Score: {draft.score}</span>
+                        <span className="text-xs text-neutral-400 font-bold border-l border-neutral-300 pl-2">Src: {draft.source}</span>
+                        <span className="text-xs text-neutral-400 font-bold border-l border-neutral-300 pl-2">{draft.posted_at?.substring(0, 10) || 'Recent'}</span>
                       </div>
-                      <h3 className="text-base font-bold text-neutral-900">{draft.company}</h3>
-                      <p className="text-sm text-neutral-500 mt-1">{draft.title}</p>
-                      <p className="text-xs text-neutral-400 mt-2">To: {draft.email}</p>
+                      
+                      <div className="flex items-baseline gap-2">
+                         <h3 className="text-base font-black text-neutral-900">{draft.company}</h3>
+                         <span className="text-sm text-neutral-500 font-medium">— {draft.location || 'Remote'}</span>
+                      </div>
+                      <p className="text-sm text-neutral-800 font-bold mt-1">{draft.title}</p>
+                      
+                      <div className="mt-3 bg-neutral-50 p-3 rounded-lg border border-neutral-100">
+                         <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed">
+                           {draft.description}
+                         </p>
+                         <a href={draft.url} target="_blank" rel="noreferrer" className="text-xs text-brand-primary font-bold mt-2 inline-block hover:underline">
+                           View Original Post ↗
+                         </a>
+                      </div>
+
+                      <p className="text-xs text-neutral-500 mt-3 font-mono bg-neutral-100 inline-block px-2 py-1 rounded border border-neutral-200">
+                        To: <span className="text-neutral-900">{draft.email}</span>
+                      </p>
                     </div>
+                    
                     <div className="flex items-center gap-2 shrink-0">
-                      <button className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors" title="Reject">
+                      <button className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-100" title="Reject">
                         <XCircle className="w-5 h-5" />
                       </button>
-                      <button className="flex items-center gap-1.5 px-4 py-2 bg-green-50 text-green-700 hover:bg-green-100 font-bold text-sm rounded-lg transition-colors">
+                      <button className="flex items-center gap-1.5 px-4 py-2 bg-brand-primary text-white hover:bg-brand-primary/90 font-bold text-sm rounded-lg transition-all shadow-md shadow-brand-primary/20 hover:-translate-y-0.5">
                         <CheckCircle2 className="w-4 h-4" />
-                        Approve & Send
+                        Send Email
                       </button>
                     </div>
                   </div>
