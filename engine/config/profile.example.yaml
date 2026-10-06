@@ -1,0 +1,20 @@
+# Copy to config/profile.yaml and edit
+name: Your Name
+email: you@gmail.com
+phone: "+91-0000000000"
+links: ["https://github.com/you", "https://linkedin.com/in/you"]
+resume_path: resumes/resume.pdf
+target_roles: ["python developer", "backend engineer"]
+skills: [python, fastapi, django, postgresql, docker, aws, react]
+keywords_exclude: [senior director, intern]
+remote_only: false
+locations: [india, remote, bangalore]
+min_score: 40
+daily_cap: 15
+min_delay_s: 120
+max_delay_s: 480
+blacklist_companies: []
+summary: "Backend engineer with X years building Python services."
+highlights:
+  - "Built <achievement 1>"
+  - "Shipped <achievement 2>"

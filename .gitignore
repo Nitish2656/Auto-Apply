@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python engine (engine/)
+engine/.venv/
+engine/autoapply.db
+engine/config/profile.yaml
+engine/.env
+engine/resumes/*.pdf
+engine/__pycache__/
+engine/autoapply/__pycache__/
+engine/autoapply/sources/__pycache__/
+**/__pycache__/
+*.py[cod]

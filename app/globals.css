@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-base: #000000;
+  --color-bg-panel: #050505;
+  --color-bg-raised: #0A0A0A;
+  --color-hairline: #1A1A1A;
+
+  --color-text-high: #FFFFFF;
+  --color-text-mid: #A3A3A3;
+  --color-text-dim: #737373;
+
+  --color-brand-primary: #9D00FF;
+  --color-brand-primary-dim: rgba(157, 0, 255, 0.15);
+  
+  --color-brand-amber: #9D00FF; /* Alias to primary for legacy components */
+  --color-brand-amber-dim: rgba(157, 0, 255, 0.15);
+
+  --color-signal-green: #3ECF8E;
+  --color-signal-red: #F0555A;
+  --color-signal-yellow: #F2C94C;
+
+  --color-cat-kids: #FF8FA3;
+  --color-cat-travel: #3FA9A0;
+  --color-cat-dance: #C64FD1;
+  --color-cat-cooking: #FF9F45;
+  --color-cat-anime: #7B6EF6;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-high);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::selection {
+  background-color: var(--color-brand-primary);
+  color: #FFFFFF;
+}
+
+/* Base heading styles to use the heading font automatically */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Custom scrollbar for control room feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}
+
