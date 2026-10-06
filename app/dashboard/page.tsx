@@ -9,6 +9,7 @@ import {
   XCircle
 } from "lucide-react";
 import { getStats, getPendingDrafts } from "@/lib/db";
+import { DraftCard } from "@/components/dashboard/DraftCard";
 
 // Prevent Next.js from caching this page so it's always live
 export const dynamic = 'force-dynamic';
@@ -27,10 +28,16 @@ export default async function DashboardPage() {
           <h1 className="text-2xl font-black text-neutral-900 tracking-tight">Overview</h1>
           <p className="text-sm text-neutral-500 font-medium mt-1">Here is what your ApplyAgent has been up to today.</p>
         </div>
-        <button className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-primary text-white font-bold rounded-lg hover:bg-brand-primary/90 transition-all shadow-lg shadow-brand-primary/20 hover:-translate-y-0.5">
-          <PlayCircle className="w-4 h-4" />
-          Run Pipeline
-        </button>
+        <form action={async () => {
+          "use server";
+          const { runPipeline } = await import("@/app/actions");
+          await runPipeline();
+        }}>
+          <button type="submit" className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-primary text-white font-bold rounded-lg hover:bg-brand-primary/90 transition-all shadow-lg shadow-brand-primary/20 hover:-translate-y-0.5">
+            <PlayCircle className="w-4 h-4" />
+            Run Pipeline
+          </button>
+        </form>
       </div>
 
       {/* Stats Grid */}
@@ -102,62 +109,22 @@ export default async function DashboardPage() {
             </button>
           </div>
 
-          <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm divide-y divide-neutral-100 overflow-hidden">
+          <div className="space-y-4">
             
             {drafts.length === 0 ? (
-              <div className="p-8 text-center flex flex-col items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-neutral-50 flex items-center justify-center mb-3">
-                  <CheckCircle2 className="w-6 h-6 text-neutral-300" />
+              <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm p-12 text-center flex flex-col items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-green-500" />
                 </div>
-                <h3 className="text-base font-bold text-neutral-900">All caught up!</h3>
-                <p className="text-sm text-neutral-500 mt-1">No drafts waiting for your review.</p>
+                <h3 className="text-lg font-black text-neutral-900">Inbox Zero!</h3>
+                <p className="text-sm text-neutral-500 mt-1">No pending applications waiting for your review.</p>
               </div>
             ) : (
               drafts.map((draft) => (
-                <div key={draft.id} className="p-5 hover:bg-neutral-50 transition-colors">
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center flex-wrap gap-2 mb-2">
-                        <span className="bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Draft</span>
-                        <span className="text-xs text-neutral-500 font-bold bg-neutral-100 px-2 py-0.5 rounded-sm">Score: {draft.score}</span>
-                        <span className="text-xs text-neutral-400 font-bold border-l border-neutral-300 pl-2">Src: {draft.source}</span>
-                        <span className="text-xs text-neutral-400 font-bold border-l border-neutral-300 pl-2">{draft.posted_at?.substring(0, 10) || 'Recent'}</span>
-                      </div>
-                      
-                      <div className="flex items-baseline gap-2">
-                         <h3 className="text-base font-black text-neutral-900">{draft.company}</h3>
-                         <span className="text-sm text-neutral-500 font-medium">— {draft.location || 'Remote'}</span>
-                      </div>
-                      <p className="text-sm text-neutral-800 font-bold mt-1">{draft.title}</p>
-                      
-                      <div className="mt-3 bg-neutral-50 p-3 rounded-lg border border-neutral-100">
-                         <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed">
-                           {draft.description}
-                         </p>
-                         <a href={draft.url} target="_blank" rel="noreferrer" className="text-xs text-brand-primary font-bold mt-2 inline-block hover:underline">
-                           View Original Post ↗
-                         </a>
-                      </div>
-
-                      <p className="text-xs text-neutral-500 mt-3 font-mono bg-neutral-100 inline-block px-2 py-1 rounded border border-neutral-200">
-                        To: <span className="text-neutral-900">{draft.email}</span>
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 shrink-0">
-                      <button className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-100" title="Reject">
-                        <XCircle className="w-5 h-5" />
-                      </button>
-                      <button className="flex items-center gap-1.5 px-4 py-2 bg-brand-primary text-white hover:bg-brand-primary/90 font-bold text-sm rounded-lg transition-all shadow-md shadow-brand-primary/20 hover:-translate-y-0.5">
-                        <CheckCircle2 className="w-4 h-4" />
-                        Send Email
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <DraftCard key={draft.id} draft={draft} />
               ))
             )}
-
+            
           </div>
         </div>
 

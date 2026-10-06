@@ -6,8 +6,23 @@ const DB_PATH = path.join(process.cwd(), 'engine', 'autoapply.db');
 
 export function getDb() {
   // Use readonly connection for the dashboard to prevent locking issues
-  // while the python script might be writing to it.
   return new Database(DB_PATH, { readonly: true, fileMustExist: false });
+}
+
+export function getWriteDb() {
+  return new Database(DB_PATH, { fileMustExist: true });
+}
+
+export function updateDraftStatus(draftId: number, status: 'approved' | 'skipped') {
+  try {
+    const db = getWriteDb();
+    db.prepare("UPDATE applications SET status = ? WHERE id = ?").run(status, draftId);
+    db.close();
+    return { success: true };
+  } catch (e) {
+    console.error("Failed to update draft:", e);
+    return { success: false, error: "DB Error" };
+  }
 }
 
 export interface Job {
