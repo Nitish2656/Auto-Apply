@@ -26,3 +26,7 @@ Thanks for your time,
 (If this isn't the right inbox or you'd prefer I not follow up, just reply "stop" and I won't.)
 """
     return subject, body
+# SMTP_HOST=smtp.gmail.com
+# SMTP_PORT=587
+# SMTP_USER=you@gmail.com
+# SMTP_PASSWORD=your-gmail-app-password
