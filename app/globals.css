@@ -54,20 +54,21 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* Custom scrollbar for control room feel */
+/* Custom scrollbar for ApplyAgent */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-base);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-hairline);
-  border-radius: 4px;
+  background: #E5E5E5;
+  border-radius: 5px;
+  border: 2px solid #FAFAFA; /* Gives a nice padding effect */
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-dim);
+  background: #D4D4D4;
 }
 
 @keyframes slide {

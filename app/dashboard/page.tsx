@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { getStats, getPendingDrafts } from "@/lib/db";
 import { DraftCard } from "@/components/dashboard/DraftCard";
+import { SubmitButton } from "@/components/dashboard/SubmitButton";
 
 // Prevent Next.js from caching this page so it's always live
 export const dynamic = 'force-dynamic';
@@ -33,10 +34,13 @@ export default async function DashboardPage() {
           const { runPipeline } = await import("@/app/actions");
           await runPipeline();
         }}>
-          <button type="submit" className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-primary text-white font-bold rounded-lg hover:bg-brand-primary/90 transition-all shadow-lg shadow-brand-primary/20 hover:-translate-y-0.5">
-            <PlayCircle className="w-4 h-4" />
+          <SubmitButton 
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-primary text-white font-bold rounded-lg hover:bg-brand-primary/90 transition-all shadow-lg shadow-brand-primary/20 hover:-translate-y-0.5"
+            loadingText="Starting..."
+            icon={<PlayCircle className="w-4 h-4" />}
+          >
             Run Pipeline
-          </button>
+          </SubmitButton>
         </form>
       </div>
 

@@ -1,5 +1,6 @@
-import { CheckCircle2, Target, Send } from "lucide-react";
+import { CheckCircle2, Target, Send, XCircle } from "lucide-react";
 import { ApplicationDraft } from "@/lib/db";
+import { SubmitButton } from "./SubmitButton";
 
 interface DraftCardProps {
   draft: ApplicationDraft;
@@ -72,9 +73,12 @@ export function DraftCard({ draft }: DraftCardProps) {
             const { rejectDraft } = await import("@/app/actions");
             await rejectDraft(draft.id);
           }} className="flex-1 lg:flex-none">
-            <button type="submit" className="w-full px-4 py-2.5 text-neutral-500 hover:text-red-600 hover:bg-red-50 font-bold text-sm rounded-xl transition-colors text-center">
+            <SubmitButton 
+              className="w-full px-4 py-2.5 text-neutral-500 hover:text-red-600 hover:bg-red-50 font-bold text-sm rounded-xl transition-colors text-center border border-transparent hover:border-red-100"
+              loadingText="Wait..."
+            >
               Reject
-            </button>
+            </SubmitButton>
           </form>
           
           <form action={async () => {
@@ -82,9 +86,12 @@ export function DraftCard({ draft }: DraftCardProps) {
             const { approveDraft } = await import("@/app/actions");
             await approveDraft(draft.id);
           }} className="flex-1 lg:flex-none">
-            <button type="submit" className="w-full px-6 py-2.5 bg-neutral-900 text-white hover:bg-brand-primary font-bold text-sm rounded-xl transition-colors shadow-sm shadow-neutral-900/10 text-center">
+            <SubmitButton 
+              className="w-full px-6 py-2.5 bg-neutral-900 text-white hover:bg-brand-primary font-bold text-sm rounded-xl transition-colors shadow-sm shadow-neutral-900/10 text-center"
+              loadingText="Approving..."
+            >
               Approve & Send
-            </button>
+            </SubmitButton>
           </form>
         </div>
       </div>
